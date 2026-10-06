@@ -1,0 +1,11 @@
+# Arquivos temporários do Office
+~$*.docx
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs e arquivos do sistema
+.DS_Store
+Thumbs.db
