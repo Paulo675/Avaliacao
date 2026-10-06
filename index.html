@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Integrativa por Camadas | Clínica Dra. Tânia</title>
+    <!-- Fontes Premium High-Ticket -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-principal: #F7F5F1;         /* Off-white refinado */
+            --navy-deep: #0F2233;            /* Azul profundo institucional */
+            --text-respostas: #374151;       /* Cinza escuro para leitura */
+            --card-bg: #FFFFFF;              /* Branco puro */
+            --border-light: #D9DEE3;         /* Cinza claro para divisórias */
+            --gold-matte: #B49B67;           /* Dourado fosco */
+            --gold-light: rgba(180, 155, 103, 0.12);
+            --navy-light: rgba(15, 34, 51, 0.05);
+            --radius-card: 16px;
+            --radius-input: 10px;
+            --shadow-subtle: 0 4px 20px -2px rgba(15, 34, 51, 0.04), 0 2px 6px -1px rgba(15, 34, 51, 0.02);
+            --shadow-hover: 0 10px 30px -5px rgba(15, 34, 51, 0.08);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--text-respostas);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.65;
+            padding: 30px 20px 80px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* Top Brand Header */
+        .clinic-brand {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .clinic-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-matte);
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--gold-matte);
+            padding-bottom: 3px;
+        }
+        .clinic-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--navy-deep);
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+        .clinic-subtitle {
+            font-size: 13.5px;
+            color: #6B7280;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Stepper / Tabs Bar */
+        .tabs-header-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            padding: 6px 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-subtle);
+            overflow-x: auto;
+            gap: 6px;
+        }
+
+        .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 40px;
+            border: none;
+            background: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6B7280;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .tab-btn:hover {
+            color: var(--navy-deep);
+            background: var(--bg-principal);
+        }
+        .tab-btn.active {
+            background: var(--navy-deep);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(15, 34, 51, 0.2);
+        }
+        .tab-btn.active .tab-circle {
+            background: var(--gold-matte);
+            color: #FFFFFF;
+            border-color: var(--gold-matte);
+        }
+        .tab-btn.clinico-tab {
+            border: 1px dashed var(--gold-matte);
+            color: var(--navy-deep);
+        }
+        .tab-btn.clinico-tab.active {
+            background: var(--gold-matte);
+            color: #FFFFFF;
+            border-color: var(--gold-matte);
+        }
+        .tab-btn.clinico-tab.active .tab-circle {
+            background: var(--navy-deep);
+            color: #FFFFFF;
+        }
+
+        .tab-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #E5E7EB;
+            color: #4B5563;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        /* Toggle & Action Bar */
+        .action-banner-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 12px 18px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .mode-status {
+            font-size: 13px;
+            color: #4B5563;
+        }
+        .mode-status strong {
+            color: var(--navy-deep);
+        }
+        .action-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-view-all {
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--navy-deep);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-view-all:hover {
+            border-color: var(--gold-matte);
+            background: var(--bg-principal);
+        }
+        .btn-print-top {
+            background: var(--navy-deep);
+            border: 1px solid var(--navy-deep);
+            color: #FFFFFF;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(15, 34, 51, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-print-top:hover {
+            background: #1a364e;
+            transform: translateY(-1px);
+        }
+
+        /* Tab Content Panes */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        body.view-all-mode .tab-pane {
+            display: block !important;
+            margin-bottom: 35px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Section Styles */
+        .card-layer {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-card);
+            padding: 32px 34px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .layer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 14px;
+            margin-bottom: 22px;
+        }
+        .layer-title-group {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .layer-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--gold-matte);
+            text-transform: uppercase;
+        }
+        .layer-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--navy-deep);
+        }
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--navy-light);
+            color: var(--navy-deep);
+        }
+        .badge-pill.gold {
+            background: var(--gold-light);
+            color: #8C733E;
+            border: 1px solid rgba(180, 155, 103, 0.3);
+        }
+
+        /* Forms */
+        .form-row { margin-bottom: 20px; }
+        .question-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 6px;
+            display: block;
+        }
+        .question-sub {
+            font-size: 12.5px;
+            color: #6B7280;
+            margin-top: -3px;
+            margin-bottom: 8px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-input);
+            padding: 10px 14px;
+            font-size: 13.5px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-respostas);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--gold-matte);
+            box-shadow: 0 0 0 3px rgba(180, 155, 103, 0.15);
+        }
+
+        /* Caixa de entrada expansível para "Outro" */
+        .outro-expandable-box {
+            display: none;
+            margin-top: 10px;
+            padding: 12px 14px;
+            background: var(--bg-principal);
+            border: 1.5px solid var(--gold-matte);
+            border-radius: var(--radius-input);
+            animation: fadeIn 0.25s ease;
+        }
+        .outro-expandable-box.open {
+            display: block;
+        }
+        .outro-expandable-box label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 4px;
+            display: block;
+        }
+        .outro-expandable-box input {
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Chips de seleção rápida */
+        .chips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .chip-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-input);
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .chip-option:hover {
+            border-color: var(--gold-matte);
+            background: var(--bg-principal);
+        }
+        .chip-option.selected {
+            background: var(--navy-deep);
+            border-color: var(--navy-deep);
+            color: #FFFFFF;
+        }
+        .chip-checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1.5px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #FFFFFF;
+        }
+        .chip-option.selected .chip-checkbox {
+            background: var(--gold-matte);
+            border-color: var(--gold-matte);
+        }
+        .chip-option.selected .chip-checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .chip-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Pain scale */
+        .pain-faces-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+        .pain-face-card {
+            flex: 1;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 12px 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #FFFFFF;
+        }
+        .pain-face-card:hover { border-color: var(--gold-matte); transform: translateY(-2px); }
+        .pain-face-card.selected {
+            background: var(--navy-deep);
+            border-color: var(--navy-deep);
+            color: #FFFFFF;
+        }
+        .pain-face-card.selected .p-desc { color: rgba(255,255,255,0.85); }
+        .pain-face-card.selected .p-score { color: var(--gold-matte); }
+        .p-emoji { font-size: 28px; margin-bottom: 4px; }
+        .p-score { font-size: 12px; font-weight: 700; color: var(--navy-deep); }
+        .p-desc { font-size: 11px; color: #6B7280; line-height: 1.3; }
+
+        /* Tables */
+        .table-luxury {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        .table-luxury th {
+            background: var(--navy-deep);
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        .table-luxury td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-light);
+            background: #FFFFFF;
+        }
+        .table-luxury tr:last-child td { border-bottom: none; }
+        .table-luxury input { padding: 6px 10px; font-size: 13px; border-radius: 6px; }
+
+        .btn-add-repeater {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            background: #FFFFFF;
+            color: var(--navy-deep);
+            border: 1.5px solid var(--gold-matte);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-add-repeater:hover { background: var(--gold-light); }
+
+        /* Relational Table */
+        .relational-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+        .relational-table th {
+            background: var(--bg-principal);
+            color: var(--navy-deep);
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-light);
+        }
+        .relational-table th:first-child { text-align: left; width: 62%; }
+        .relational-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .relational-table tr:hover td { background: #FAF8F5; }
+        .relational-table input[type="radio"] { accent-color: var(--navy-deep); width: 16px; height: 16px; cursor: pointer; }
+
+        /* Tab 4: Metas & Síntese Card */
+        .meta-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--gold-matte);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+        }
+        .meta-card h5 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 18px;
+            color: var(--navy-deep);
+            margin-bottom: 4px;
+        }
+
+        /* Pane navigation footers */
+        .pane-nav-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+        .btn-prev {
+            background: #FFFFFF;
+            color: var(--navy-deep);
+            border: 1px solid var(--border-light);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-next {
+            background: var(--navy-deep);
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(15, 34, 51, 0.2);
+        }
+        .btn-prev:hover { background: var(--bg-principal); }
+        .btn-next:hover { background: #19364f; }
+
+        /* Floating Print Button */
+        .print-floating {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--navy-deep);
+            color: #FFFFFF;
+            border: 1px solid var(--gold-matte);
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(15, 34, 51, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .print-floating:hover { background: #18334b; transform: translateY(-2px); }
+
+        /* ======================================================= */
+        /* REGRAS ESPECÍFICAS DE IMPRESSÃO / GERAÇÃO DE PDF */
+        /* ======================================================= */
+        .print-value-block {
+            display: none;
+        }
+
+        body.is-printing-report {
+            background: #FFFFFF !important;
+            padding: 0 !important;
+        }
+        body.is-printing-report .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+        body.is-printing-report .tabs-header-nav,
+        body.is-printing-report .action-banner-bar,
+        body.is-printing-report .pane-nav-footer,
+        body.is-printing-report .print-floating,
+        body.is-printing-report .btn-add-repeater {
+            display: none !important;
+        }
+        body.is-printing-report .tab-pane {
+            display: block !important;
+            opacity: 1 !important;
+            transform: none !important;
+            margin-bottom: 24px !important;
+            page-break-inside: auto;
+        }
+        body.is-printing-report .card-layer {
+            box-shadow: none !important;
+            border: 1px solid #D9DEE3 !important;
+            padding: 20px !important;
+            margin-bottom: 20px !important;
+            page-break-inside: avoid;
+        }
+        
+        /* Converte inputs para texto legível em impressão */
+        body.is-printing-report input[type="text"],
+        body.is-printing-report input[type="number"],
+        body.is-printing-report textarea,
+        body.is-printing-report select {
+            display: none !important;
+        }
+        body.is-printing-report .print-value-block {
+            display: block !important;
+            font-size: 13.5px !important;
+            color: #0F2233 !important;
+            font-weight: 500 !important;
+            background: #F7F5F1 !important;
+            border-left: 3px solid #0F2233 !important;
+            padding: 6px 12px !important;
+            border-radius: 4px !important;
+            min-height: 28px !important;
+            white-space: pre-wrap !important;
+        }
+        body.is-printing-report .table-luxury .print-value-block {
+            background: transparent !important;
+            border-left: none !important;
+            padding: 2px 4px !important;
+            font-size: 12px !important;
+        }
+
+        /* Chips em modo impressão */
+        body.is-printing-report .chip-option {
+            border: 1px solid #D9DEE3 !important;
+            color: #374151 !important;
+            background: #FFFFFF !important;
+        }
+        body.is-printing-report .chip-option.selected {
+            background: #0F2233 !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #0F2233 !important;
+        }
+        body.is-printing-report .chip-option.selected .chip-text {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+
+        /* Dor em impressão */
+        body.is-printing-report .pain-face-card.selected {
+            border: 2px solid #0F2233 !important;
+            background: #F7F5F1 !important;
+            color: #0F2233 !important;
+        }
+        body.is-printing-report .pain-face-card.selected .p-score {
+            color: #B49B67 !important;
+        }
+
+        @media print {
+            body {
+                background: #FFFFFF !important;
+                padding: 0 !important;
+            }
+            .container {
+                max-width: 100% !important;
+            }
+            .tabs-header-nav,
+            .action-banner-bar,
+            .pane-nav-footer,
+            .print-floating,
+            .btn-add-repeater {
+                display: none !important;
+            }
+            .tab-pane {
+                display: block !important;
+                margin-bottom: 24px !important;
+                page-break-inside: auto;
+            }
+            .card-layer {
+                box-shadow: none !important;
+                border: 1px solid #D9DEE3 !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-floating" onclick="prepareAndPrint()">
+    <span style="color: var(--gold-matte); font-size: 16px;">◈</span> Gerar PDF Completo Preenchido
+</button>
+
+<div class="container">
+
+    <!-- Top Clinic Branding -->
+    <header class="clinic-brand">
+        <div class="clinic-badge">Medicina Integrativa • Cuidado Centrado na Pessoa</div>
+        <h1 class="clinic-title">Ficha de Avaliação Integrativa por Camadas</h1>
+        <p class="clinic-subtitle">Ambiente de Pré-Consulta e Síntese de Bem-Estar da Dra. Tânia</p>
+    </header>
+
+    <!-- Interactive Navigation Bar (Abas Clicáveis) -->
+    <nav class="tabs-header-nav" id="tabsNav">
+        <button class="tab-btn active" onclick="switchTab(1)">
+            <span class="tab-circle">1</span>
+            <span>Identificação</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(2)">
+            <span class="tab-circle">2</span>
+            <span>Camada Biológica</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(3)">
+            <span class="tab-circle">3</span>
+            <span>Camada Psicossocial</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(4)">
+            <span class="tab-circle">4</span>
+            <span>Síntese & Metas</span>
+        </button>
+        <button class="tab-btn clinico-tab" onclick="switchTab(5)">
+            <span class="tab-circle">🩺</span>
+            <span>Visão Clínica (Dra. Tânia)</span>
+        </button>
+    </nav>
+
+    <!-- Top Action / Status Bar -->
+    <div class="action-banner-bar">
+        <div class="mode-status">
+            Etapa ativa: <strong id="currentTabLabel">Aba 1: Identificação e Visão de Futuro</strong>
+        </div>
+        <div class="action-btn-group">
+            <button class="btn-view-all" id="btnToggleAll" onclick="toggleViewAll()">
+                📄 Ver Todas as Abas na Página
+            </button>
+            <button class="btn-print-top" onclick="prepareAndPrint()">
+                🖨️ Imprimir / Salvar PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ABA 1: IDENTIFICAÇÃO E VISÃO DE FUTURO -->
+    <!-- ========================================== -->
+    <div class="tab-pane active" id="pane-1">
+        <section class="card-layer">
+            <div class="layer-header">
+                <div class="layer-title-group">
+                    <span class="layer-tag">Camada 01</span>
+                    <h2 class="layer-title">Identificação & Visão de Futuro</h2>
+                </div>
+                <span class="badge-pill">👤 Preenchimento do Paciente</span>
+            </div>
+
+            <div class="form-row grid-2">
+                <div>
+                    <label class="question-label">Como prefere ser chamado(a)?</label>
+                    <div class="question-sub">Seu nome de uso ou afetivo no cotidiano</div>
+                    <input type="text" id="campo_nome_preferido" placeholder="Ex: Tânia, Maria, Paulo...">
+                </div>
+                <div>
+                    <label class="question-label">Nome civil completo</label>
+                    <div class="question-sub">Para emissão segura de prescrições e prontuário</div>
+                    <input type="text" id="campo_nome_civil" placeholder="Nome oficial de registro">
+                </div>
+            </div>
+
+            <div class="form-row grid-3">
+                <div>
+                    <label class="question-label">Data de Nascimento</label>
+                    <input type="text" id="campo_data_nascimento" placeholder="DD / MM / AAAA">
+                </div>
+                <div>
+                    <label class="question-label">Profissão / Ocupação</label>
+                    <input type="text" id="campo_profissao" placeholder="Sua atividade principal">
+                </div>
+                <div>
+                    <label class="question-label">Estado Relacional</label>
+                    <select id="campo_estado_relacional">
+                        <option value="">Selecione...</option>
+                        <option value="Solteiro(a)">Solteiro(a)</option>
+                        <option value="Namoro / Relação afetiva">Namoro / Relação afetiva</option>
+                        <option value="Casado(a) / União estável">Casado(a) / União estável</option>
+                        <option value="Separado(a) / Divorciado(a)">Separado(a) / Divorciado(a)</option>
+                        <option value="Viúvo(a)">Viúvo(a)</option>
+                        <option value="Prefiro não declarar">Prefiro não declarar</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">Rotina diária habitual</label>
+                <div class="question-sub">Horários habituais de trabalho, turnos, estudos, cuidados familiares...</div>
+                <textarea rows="2" id="campo_rotina" placeholder="Como costuma ser a sua rotina de segunda a sexta?"></textarea>
+            </div>
+
+            <div class="form-row grid-2">
+                <div>
+                    <label class="question-label">Filhos</label>
+                    <input type="text" id="campo_filhos" placeholder="Tem filhos? Nomes e idades (se houver)">
+                </div>
+                <div>
+                    <label class="question-label">Família de origem</label>
+                    <input type="text" id="campo_familia_origem" placeholder="Com quem mora, posição entre irmãos...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">Valores de vida, espiritualidade ou práticas de serenidade (opcional)</label>
+                <div class="question-sub">O que dá sustentação, sentido ou conforto nos momentos de vida?</div>
+                <input type="text" id="campo_valores" placeholder="Crenças, práticas, valores que considera importantes...">
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">O que motivou a busca por essa consulta exatamente neste momento?</label>
+                <div class="question-sub">Conte o que tem mais chamado sua atenção nas últimas semanas.</div>
+                <textarea rows="2" id="campo_motivo_busca" placeholder="Descreva brevemente o seu motivo principal..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">Em 12 semanas (cerca de 3 meses), o que você gostaria que estivesse diferente na sua vida e saúde?</label>
+                <div class="question-sub">Sua visão de transformação com esse processo de cuidado integrativo.</div>
+                <textarea rows="2" id="campo_objetivo_12_semanas" placeholder="O que seria um excelente resultado para você daqui a 3 meses?"></textarea>
+            </div>
+
+            <div class="pane-nav-footer">
+                <div></div>
+                <button class="btn-next" onclick="switchTab(2)">Avançar para Camada Biológica ➔</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ABA 2: CAMADA BIOLÓGICA -->
+    <!-- ========================================== -->
+    <div class="tab-pane" id="pane-2">
+        <section class="card-layer">
+            <div class="layer-header">
+                <div class="layer-title-group">
+                    <span class="layer-tag">Camada 02</span>
+                    <h2 class="layer-title">Camada Biológica: Sinais, Ritmos e Saúde Física</h2>
+                </div>
+                <span class="badge-pill">🌿 Corpo & Fisiologia</span>
+            </div>
+
+            <!-- 1. Top 15 Sintomas + Outro com caixa expansível -->
+            <div class="form-row">
+                <label class="question-label">O que você tem percebido recentemente? (Clique para selecionar suas prioridades):</label>
+                <div class="chips-grid" id="symptomsGrid">
+                    <div class="chip-option selected" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Preocupação constante ou mente que não desliga</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Aperto no peito, falta de ar ou palpitações</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Desânimo, tristeza ou vontade de ficar quieto(a)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Perda de interesse ou prazer nas coisas</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Irritação fácil ou pavio curto no cotidiano</span>
+                    </div>
+                    <div class="chip-option selected" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Mudanças no apetite (comer sem fome ou sem apetite)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Dificuldade para focar ou concluir tarefas</span>
+                    </div>
+                    <div class="chip-option selected" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Dificuldade para dormir ou despertares de madrugada</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Acordar cansado(a) / sono que não recupera a energia</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Cansaço físico constante ou falta de disposição</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Dores frequentes no corpo (cabeça, coluna, tensões)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Desconforto na barriga (estufamento, azia, cólicas)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Sensação de cabeça aérea, esquecimentos, lentidão</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Altos e baixos frequentes no humor</span>
+                    </div>
+                    <!-- OUTRO SINAL IMPORTANTE NÃO LISTADO -->
+                    <div class="chip-option" id="chip_outro_sintoma" onclick="toggleChipWithInput(this, 'box_outro_sintoma', 'input_outro_sintoma')">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Outro sinal importante não listado</span>
+                    </div>
+                </div>
+
+                <!-- Caixa expansível para outro sinal -->
+                <div class="outro-expandable-box" id="box_outro_sintoma">
+                    <label>Especifique qual outro sinal ou sintoma você tem percebido:</label>
+                    <input type="text" id="input_outro_sintoma" placeholder="Ex: Tonturas, dormência nas mãos, zumbido no ouvido, etc...">
+                </div>
+            </div>
+
+            <!-- Detalhe do sintoma -->
+            <div class="form-row grid-2" style="background: var(--bg-principal); padding: 18px; border-radius: 12px;">
+                <div>
+                    <label class="question-label" style="font-size: 13.5px;">Sintoma Prioritário: Início e Padrão</label>
+                    <input type="text" placeholder="Desde quando? (ex: 3 meses). Ocorre contínuo ou em crises?">
+                </div>
+                <div>
+                    <label class="question-label" style="font-size: 13.5px;">Gatilhos, Alívio e Impacto (0 a 4)</label>
+                    <input type="text" placeholder="O que costuma piorar? O que alivia? Impacto: [  ]">
+                </div>
+            </div>
+
+            <!-- 2. Diagnósticos prévios informados + Outro com caixa expansível -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Algum médico ou especialista já mencionou algum diagnóstico com você anteriormente?</label>
+                <div class="question-sub">Marque apenas o que já lhe foi explicado em consultas prévias:</div>
+                <div class="chips-grid">
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Episódio de depressão ou tristeza profunda</span></div>
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Ansiedade generalizada ou constante</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Crises de pânico / sensação súbita de sufoco</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Receio intenso de lugares cheios, fechados ou sair</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Oscilações marcantes de fases de humor</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Dificuldade de atenção ou hiperatividade (TDAH)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Pensamentos repetitivos ou rituais de alívio</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Marcas persistentes de episódios traumáticos</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Desafios com a alimentação (compulsão)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Nunca recebi nenhum diagnóstico formal</span></div>
+                    <!-- OUTRO DIAGNÓSTICO -->
+                    <div class="chip-option" id="chip_outro_diagnostico" onclick="toggleChipWithInput(this, 'box_outro_diagnostico', 'input_outro_diagnostico')">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Outro diagnóstico mencionado</span>
+                    </div>
+                </div>
+
+                <!-- Caixa expansível para outro diagnóstico -->
+                <div class="outro-expandable-box" id="box_outro_diagnostico">
+                    <label>Qual outro diagnóstico ou hipótese já foi mencionado por um profissional?</label>
+                    <input type="text" id="input_outro_diagnostico" placeholder="Ex: Síndrome de Burnout, Ciclotimia, Fobia social específica, etc...">
+                </div>
+            </div>
+
+            <!-- 3. Comorbidades Físicas + Outra com caixa expansível -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Condições de Saúde Física Conhecidas:</label>
+                <div class="chips-grid">
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Pressão alta (Hipertensão)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Diabetes ou Pré-diabetes</span></div>
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Alteração na tireoide (Hipotireoidismo)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Colesterol ou Triglicerídeos altos</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sobrepeso ou Obesidade</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Gordura no fígado (Esteatose hepática)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Enxaqueca / Cefaleias frequentes</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Alterações intestinais (Colite / SII)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Fibromialgia ou dores musculares</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Nenhuma alteração física conhecida</span></div>
+                    <!-- OUTRA CONDICAO FISICA -->
+                    <div class="chip-option" id="chip_outra_condicao" onclick="toggleChipWithInput(this, 'box_outra_condicao', 'input_outra_condicao')">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Outra condição física não listada</span>
+                    </div>
+                </div>
+
+                <!-- Caixa expansível para outra condição física -->
+                <div class="outro-expandable-box" id="box_outra_condicao">
+                    <label>Especifique qual outra condição de saúde física você possui ou acompanha:</label>
+                    <input type="text" id="input_outra_condicao" placeholder="Ex: Endometriose, Refluxo gastroesofágico, Psoríase, Asma, etc...">
+                </div>
+            </div>
+
+            <!-- Escala de Dor -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Experiência com a Dor Física (Se houver):</label>
+                <div class="question-sub">Selecione a expressão que mais se aproxima de como você sente a dor:</div>
+                
+                <div class="pain-faces-row">
+                    <div class="pain-face-card" onclick="selectPainFace(this, 'Nível 0')">
+                        <div class="p-emoji">😊</div>
+                        <div class="p-score">Nível 0</div>
+                        <div class="p-desc">Sem dor, conforto pleno e paz.</div>
+                    </div>
+                    <div class="pain-face-card" onclick="selectPainFace(this, 'Nível 2-3')">
+                        <div class="p-emoji">😐</div>
+                        <div class="p-score">Nível 2-3</div>
+                        <div class="p-desc">Incômodo leve, esquecido nas atividades.</div>
+                    </div>
+                    <div class="pain-face-card selected" onclick="selectPainFace(this, 'Nível 4-5')">
+                        <div class="p-emoji">🙁</div>
+                        <div class="p-score">Nível 4-5</div>
+                        <div class="p-desc">Dor moderada, desgastante mas tolerável.</div>
+                    </div>
+                    <div class="pain-face-card" onclick="selectPainFace(this, 'Nível 6-7')">
+                        <div class="p-emoji">😣</div>
+                        <div class="p-score">Nível 6-7</div>
+                        <div class="p-desc">Dor forte, afeta trabalho, sono e humor.</div>
+                    </div>
+                    <div class="pain-face-card" onclick="selectPainFace(this, 'Nível 8-10')">
+                        <div class="p-emoji">😭</div>
+                        <div class="p-score">Nível 8-10</div>
+                        <div class="p-desc">Severa ou paralisante.</div>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <input type="text" placeholder="Onde dói principalmente? (ex: lombar, cabeça)">
+                    <input type="text" placeholder="Como é a sensação? (pontada, aperto, queimação, choque...)">
+                </div>
+            </div>
+
+            <!-- Medicamentos em linha -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Medicamentos e Suplementos em Uso Atual:</label>
+                <div class="question-sub">Formato estruturado em linha para mapeamento de interações e segurança farmacológica:</div>
+
+                <table class="table-luxury">
+                    <thead>
+                        <tr>
+                            <th style="width: 24%;">Medicamento</th>
+                            <th style="width: 14%;">Dose</th>
+                            <th style="width: 20%;">Horários</th>
+                            <th style="width: 20%;">Motivo de Uso</th>
+                            <th style="width: 22%;">Efeito Adverso?</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medsTableBody">
+                        <tr>
+                            <td><input type="text" value="Sertralina"></td>
+                            <td><input type="text" value="50 mg"></td>
+                            <td><input type="text" value="1x pela manhã"></td>
+                            <td><input type="text" value="Ansiedade / Humor"></td>
+                            <td><input type="text" value="Náusea leve inicial"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Levotiroxina"></td>
+                            <td><input type="text" value="50 mcg"></td>
+                            <td><input type="text" value="1x em jejum"></td>
+                            <td><input type="text" value="Hipotireoidismo"></td>
+                            <td><input type="text" value="Nenhum"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn-add-repeater" type="button" onclick="addMedRow()">
+                    <span style="color: var(--gold-matte); font-size: 15px;">＋</span> Adicionar outro medicamento atual
+                </button>
+            </div>
+
+            <!-- Ritmos -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Ritmos de Vida: Alimentação, Sono e Movimento</label>
+                <div class="grid-3">
+                    <div>
+                        <label style="font-size: 12.5px; font-weight: 600;">Sono</label>
+                        <select>
+                            <option>Dorme bem (7-8h reparadoras)</option>
+                            <option selected>Demora para pegar no sono</option>
+                            <option>Acorda no meio da noite</option>
+                            <option>Sono agitado / não reparador</option>
+                            <option>Ronco frequente / suspeita apneia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 12.5px; font-weight: 600;">Alimentação</label>
+                        <select>
+                            <option>Horários regulares e equilibrada</option>
+                            <option>Pulo refeições com frequência</option>
+                            <option selected>Como sob estresse emocional</option>
+                            <option>Muitos ultraprocessados / delivery</option>
+                            <option>Sinto culpa após comer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 12.5px; font-weight: 600;">Atividade Física</label>
+                        <select>
+                            <option selected>Sedentário(a) no momento</option>
+                            <option>Caminhadas leves</option>
+                            <option>Pratica 1 a 2x por semana</option>
+                            <option>Regular (3x ou mais por semana)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pane-nav-footer">
+                <button class="btn-prev" onclick="switchTab(1)">← Voltar para Identificação</button>
+                <button class="btn-next" onclick="switchTab(3)">Avançar para Camada Psicossocial ➔</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ABA 3: CAMADA PSICOSSOCIAL -->
+    <!-- ========================================== -->
+    <div class="tab-pane" id="pane-3">
+        <section class="card-layer">
+            <div class="layer-header">
+                <div class="layer-title-group">
+                    <span class="layer-tag">Camada 03</span>
+                    <h2 class="layer-title">Camada Psicossocial: Vínculos e Estilos Relacionais</h2>
+                </div>
+                <span class="badge-pill">🌱 Vínculos & Recursos</span>
+            </div>
+
+            <!-- 4. O que mais tem pesado nos seus ombros hoje + Outros com caixa expansível -->
+            <div class="form-row">
+                <label class="question-label">O que mais tem pesado nos seus ombros hoje?</label>
+                <div class="question-sub">Marque as principais fontes de sobrecarga no seu momento:</div>
+                <div class="chips-grid">
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sobrecarga ou pressão no trabalho</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Conflitos ou distanciamento na família</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Desafios no relacionamento amoroso</span></div>
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Preocupações financeiras</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Cuidado exaustivo com dependentes</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sensação de solidão / falta de apoio</span></div>
+                    <!-- OUTROS PESOS / DESAFIOS -->
+                    <div class="chip-option" id="chip_outro_peso" onclick="toggleChipWithInput(this, 'box_outro_peso', 'input_outro_peso')">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Outros desafios ou preocupações</span>
+                    </div>
+                </div>
+
+                <!-- Caixa expansível para outro desafio -->
+                <div class="outro-expandable-box" id="box_outro_peso">
+                    <label>Descreva qual outra situação tem pesado nos seus ombros recentemente:</label>
+                    <input type="text" id="input_outro_peso" placeholder="Ex: Processo de luto recente, mudança de cidade, cobrança nos estudos, etc...">
+                </div>
+            </div>
+
+            <div class="form-row grid-2">
+                <div>
+                    <label class="question-label">Pessoas de maior confiança na vida atual</label>
+                    <input type="text" placeholder="Com quem você pode desabafar e ser você mesmo(a)?">
+                </div>
+                <div>
+                    <label class="question-label">O que lhe renova a energia e traz paz?</label>
+                    <input type="text" placeholder="Hobbies, natureza, descanso, leituras...">
+                </div>
+            </div>
+
+            <!-- Estilos Relacionais Humanizados -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Como você se percebe nas suas relações (Sem rótulos diagnósticos):</label>
+                <p class="question-sub">
+                    Cada frase abaixo reflete maneiras humanas de funcionar no mundo. Não são diagnósticos; são bússolas para nortear nosso cuidado:
+                </p>
+
+                <table class="relational-table">
+                    <thead>
+                        <tr>
+                            <th>Como costumo me perceber</th>
+                            <th>Raramente</th>
+                            <th>Às vezes</th>
+                            <th>Frequentemente</th>
+                            <th>Conversar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01. Fico muito em alerta ou desconfiado(a) sobre as reais intenções das pessoas comigo.</td>
+                            <td align="center"><input type="radio" name="rel1" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel1" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel1" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel1" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>02. Sinto-me mais sereno(a) em recolhimento e costumo preferir certa distância íntima.</td>
+                            <td align="center"><input type="radio" name="rel2" value="Raramente" checked></td>
+                            <td align="center"><input type="radio" name="rel2" value="Às vezes"></td>
+                            <td align="center"><input type="radio" name="rel2" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel2" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>03. Costumo sentir que meu jeito de pensar ou de sentir a vida é muito particular e incompreendido.</td>
+                            <td align="center"><input type="radio" name="rel3" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel3" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel3" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel3" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>04. Quando me sinto sob forte pressão, acabo agindo por impulso e depois lido com os impactos.</td>
+                            <td align="center"><input type="radio" name="rel4" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel4" value="Às vezes"></td>
+                            <td align="center"><input type="radio" name="rel4" value="Frequentemente" checked></td>
+                            <td align="center"><input type="radio" name="rel4" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>05. Em vínculos estreitos, sinto emoções muito intensas e um medo profundo de afastamento.</td>
+                            <td align="center"><input type="radio" name="rel5" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel5" value="Às vezes"></td>
+                            <td align="center"><input type="radio" name="rel5" value="Frequentemente" checked></td>
+                            <td align="center"><input type="radio" name="rel5" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>06. Sentir-me visto(a), expressivo(a) e ter reconhecimento tem um peso muito grande para mim.</td>
+                            <td align="center"><input type="radio" name="rel6" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel6" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel6" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel6" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>07. Críticas ou falta de reconhecimento do meu esforço mexem profundamente comigo.</td>
+                            <td align="center"><input type="radio" name="rel7" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel7" value="Às vezes"></td>
+                            <td align="center"><input type="radio" name="rel7" value="Frequentemente" checked></td>
+                            <td align="center"><input type="radio" name="rel7" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>08. Posso recuar em aproximações quando temo ser julgado(a) ou passar por algum constrangimento.</td>
+                            <td align="center"><input type="radio" name="rel8" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel8" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel8" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel8" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>09. Tenho inclinação a buscar apoio ou aprovação de alguém próximo para tomar decisões importantes.</td>
+                            <td align="center"><input type="radio" name="rel9" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel9" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel9" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel9" value="Conversar"></td>
+                        </tr>
+                        <tr>
+                            <td>10. Sustento um padrão de exigência muito alto comigo mesmo(a) e me incomodo com falhas e desordem.</td>
+                            <td align="center"><input type="radio" name="rel10" value="Raramente"></td>
+                            <td align="center"><input type="radio" name="rel10" value="Às vezes"></td>
+                            <td align="center"><input type="radio" name="rel10" value="Frequentemente" checked></td>
+                            <td align="center"><input type="radio" name="rel10" value="Conversar"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pane-nav-footer">
+                <button class="btn-prev" onclick="switchTab(2)">← Voltar para Camada Biológica</button>
+                <button class="btn-next" onclick="switchTab(4)">Avançar para Síntese & Metas ➔</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ABA 4: SÍNTESE & METAS (12 SEMANAS) -->
+    <!-- ========================================== -->
+    <div class="tab-pane" id="pane-4">
+        <section class="card-layer">
+            <div class="layer-header">
+                <div class="layer-title-group">
+                    <span class="layer-tag">Camada 04</span>
+                    <h2 class="layer-title">Síntese de Bem-Estar e Metas Compartilhadas</h2>
+                </div>
+                <span class="badge-pill gold">🎯 Visão Compartilhada para 12 Semanas</span>
+            </div>
+
+            <p class="question-sub" style="margin-bottom: 20px;">
+                Esta síntese integra seus relatos com a formulação clínica acordada na consulta, estabelecendo compromissos claros e possíveis para os próximos 90 dias:
+            </p>
+
+            <div class="meta-card">
+                <h5>1. Meta Fisiológica & Ritmo do Corpo (Biológica)</h5>
+                <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Qualidade do sono reparador, alívio de queixas digestivas e estabilização de energia.</p>
+                <input type="text" value="Ajustar higiene do sono e suplementação noturna de magnésio; caminhada matinal de 20 min 3x/semana.">
+            </div>
+
+            <div class="meta-card">
+                <h5>2. Meta Emocional & Relacional (Psicossocial)</h5>
+                <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Regulação da ansiedade em momentos de pressão e construção de limites saudáveis.</p>
+                <input type="text" value="Implementar pausas de respiração consciente de 5 min antes de reuniões; estabelecer horário limite de trabalho.">
+            </div>
+
+            <div class="meta-card">
+                <h5>3. Meta de Autocuidado & Revitalização (Sustentabilidade)</h5>
+                <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Resgatar momentos de prazer genuíno e redução da autocrítica excessiva.</p>
+                <input type="text" value="Reservar 1 período no final de semana exclusivamente para lazer e descanso sem compromisso de tela.">
+            </div>
+
+            <div class="form-row grid-2" style="margin-top: 20px;">
+                <div>
+                    <label class="question-label">Indicador de Progresso Percebido</label>
+                    <input type="text" placeholder="Como você e a médica saberão que houve evolução?">
+                </div>
+                <div>
+                    <label class="question-label">Data Prevista para Reavaliação</label>
+                    <input type="text" value="Em 6 a 8 semanas (Retorno de Consolidação)">
+                </div>
+            </div>
+
+            <div class="pane-nav-footer">
+                <button class="btn-prev" onclick="switchTab(3)">← Voltar para Camada Psicossocial</button>
+                <button class="btn-next" onclick="switchTab(5)">Ir para Área Clínica Confidencial ➔</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ABA 5: ÁREA CLÍNICA EXCLUSIVA (DRA. TÂNIA) -->
+    <!-- ========================================== -->
+    <div class="tab-pane" id="pane-5">
+        <section class="card-layer" style="border: 2px solid var(--gold-matte);">
+            <div class="layer-header" style="border-color: rgba(180, 155, 103, 0.3);">
+                <div class="layer-title-group">
+                    <span class="layer-tag" style="color: #991b1b;">Área Restrita</span>
+                    <h2 class="layer-title">Formulação Médica Integrativa (Dra. Tânia)</h2>
+                </div>
+                <span class="badge-pill gold">🩺 Confidencial • Uso Profissional</span>
+            </div>
+
+            <div style="background: #FDF9F0; border-left: 4px solid var(--gold-matte); padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 13px; color: #78350F;">
+                <strong>Segurança & Sigilo Clínico:</strong> Este espaço reúne hipóteses diagnósticas (CID-11), mapeamento de clusters de personalidade e os 18 Esquemas Desadaptativos de Young. Estas notas são de uso exclusivo da profissional e não aparecem na devolutiva leiga do paciente sem validação direta.
+            </div>
+
+            <div class="form-row grid-2">
+                <div>
+                    <label class="question-label">Sinais Vitais e Exame Físico</label>
+                    <input type="text" placeholder="PA: 120/80 mmHg | FC: 72 bpm | IMC: 24.2 | Circ. Abd: 82 cm">
+                </div>
+                <div>
+                    <label class="question-label">Hipóteses Diagnósticas Principais (CID-11 / DSM)</label>
+                    <input type="text" placeholder="Transtorno de Ansiedade Generalizada (6B00), Dispepsia funcional...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">Mapeamento dos 18 Esquemas Desadaptativos Iniciais (Young):</label>
+                <div class="chips-grid" style="grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));">
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Abandono / Instabilidade</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Privação Emocional</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Desconfiança / Abuso</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Isolamento Social</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Defectividade / Vergonha</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Fracasso</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Dependência / Incompetência</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Vulnerabilidade ao Dano</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Emaranhamento</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Subjugação</span></div>
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Autossacrifício</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Busca de Aprovação</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Negativismo / Pessimismo</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Inibição Emocional</span></div>
+                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Padrões Inflexíveis</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Grandiosidade / Arrogo</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Autocontrole Insuficiente</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Postura Punitiva</span></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="question-label">Conduta Médica, Estratégia de Prescrição / Desprescrição e Exames:</label>
+                <textarea rows="3" placeholder="Ajustes farmacológicos, exames laboratoriais complementares solicitados, desprescrição planejada e encaminhamentos interdisciplinares..."></textarea>
+            </div>
+
+            <div class="pane-nav-footer">
+                <button class="btn-prev" onclick="switchTab(4)">← Voltar para Síntese & Metas</button>
+                <button class="btn-next" style="background: var(--gold-matte);" onclick="prepareAndPrint()">🖨️ Imprimir Prontuário Completo com Dados</button>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+<!-- Motor de Sincronização Dinâmica e Impressão Perfeita -->
+<script>
+    const tabLabels = {
+        1: "Aba 1: Identificação e Visão de Futuro",
+        2: "Aba 2: Camada Biológica (Sinais, Ritmos e Fisiologia)",
+        3: "Aba 3: Camada Psicossocial (Vínculos e Estilos Relacionais)",
+        4: "Aba 4: Síntese de Bem-Estar e Metas (12 Semanas)",
+        5: "Aba 5: Visão Clínica Confidencial (Dra. Tânia)"
+    };
+
+    function switchTab(tabIndex) {
+        document.body.classList.remove('view-all-mode');
+        document.getElementById('btnToggleAll').innerText = "📄 Ver Todas as Abas na Página";
+
+        // Atualiza botões
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach((btn, idx) => {
+            if (idx + 1 === tabIndex) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Alterna abas
+        for (let i = 1; i <= 5; i++) {
+            const pane = document.getElementById('pane-' + i);
+            if (pane) {
+                if (i === tabIndex) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            }
+        }
+
+        document.getElementById('currentTabLabel').innerText = tabLabels[tabIndex];
+        window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    function toggleViewAll() {
+        const isAll = document.body.classList.toggle('view-all-mode');
+        const btn = document.getElementById('btnToggleAll');
+        if (isAll) {
+            btn.innerText = "📑 Voltar ao Modo Abas";
+            document.getElementById('currentTabLabel').innerText = "Visualizando Todas as Abas Continuamente";
+        } else {
+            btn.innerText = "📄 Ver Todas as Abas na Página";
+            switchTab(1);
+        }
+    }
+
+    function toggleChip(chip) {
+        chip.classList.toggle('selected');
+    }
+
+    // Função especial para chips com caixa de texto expansível
+    function toggleChipWithInput(chip, boxId, inputId) {
+        chip.classList.toggle('selected');
+        const box = document.getElementById(boxId);
+        if (box) {
+            if (chip.classList.contains('selected')) {
+                box.classList.add('open');
+                const inp = document.getElementById(inputId);
+                if (inp) inp.focus();
+            } else {
+                box.classList.remove('open');
+            }
+        }
+    }
+
+    function selectPainFace(card, scoreText) {
+        document.querySelectorAll('.pain-face-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+    }
+
+    function addMedRow() {
+        const tbody = document.getElementById('medsTableBody');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" placeholder="Medicamento"></td>
+            <td><input type="text" placeholder="Dose"></td>
+            <td><input type="text" placeholder="Horários"></td>
+            <td><input type="text" placeholder="Motivo"></td>
+            <td><input type="text" placeholder="Efeito adverso?"></td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+    // ========================================================
+    // MOTOR DE SINCRONIZAÇÃO PRE-PRINT (GARANTE DADOS NO PDF)
+    // ========================================================
+    function prepareAndPrint() {
+        // Remove blocos de exibição pré-existentes se houver
+        document.querySelectorAll('.print-value-block').forEach(el => el.remove());
+
+        // 1. Sincroniza todos os INPUTS (text, number)
+        document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+            // Se for uma caixinha de "Outro" cujo container não está aberto, pula para não poluir
+            const parentBox = input.closest('.outro-expandable-box');
+            if (parentBox && !parentBox.classList.contains('open')) {
+                return;
+            }
+
+            const val = input.value.trim();
+            const display = document.createElement('div');
+            display.className = 'print-value-block';
+            display.innerText = val ? val : "(Não preenchido)";
+            if (!val) {
+                display.style.color = "#9CA3AF";
+                display.style.fontStyle = "italic";
+            }
+            input.parentNode.insertBefore(display, input.nextSibling);
+        });
+
+        // 2. Sincroniza todos os TEXTAREAS
+        document.querySelectorAll('textarea').forEach(textarea => {
+            const val = textarea.value.trim();
+            const display = document.createElement('div');
+            display.className = 'print-value-block';
+            display.innerText = val ? val : "(Não preenchido)";
+            if (!val) {
+                display.style.color = "#9CA3AF";
+                display.style.fontStyle = "italic";
+            }
+            textarea.parentNode.insertBefore(display, textarea.nextSibling);
+        });
+
+        // 3. Sincroniza todos os SELECTS
+        document.querySelectorAll('select').forEach(select => {
+            const selectedText = select.options[select.selectedIndex] ? select.options[select.selectedIndex].text : "";
+            const display = document.createElement('div');
+            display.className = 'print-value-block';
+            display.innerText = selectedText || "(Não selecionado)";
+            select.parentNode.insertBefore(display, select.nextSibling);
+        });
+
+        // 4. Marca todas as abas como ativas e ativa classe de impressão
+        document.body.classList.add('is-printing-report');
+
+        // Aguarda renderização no DOM e chama a caixa de impressão do navegador
+        setTimeout(() => {
+            window.print();
+            
+            // Após fechar o diálogo de impressão, restaura o modo de formulário
+            setTimeout(() => {
+                document.body.classList.remove('is-printing-report');
+                document.querySelectorAll('.print-value-block').forEach(el => el.remove());
+            }, 500);
+        }, 200);
+    }
+
+    // Ouvintes nativos do navegador caso o usuário aperte Ctrl+P diretamente
+    window.addEventListener('beforeprint', () => {
+        if (!document.body.classList.contains('is-printing-report')) {
+            prepareAndPrint();
+        }
+    });
+</script>
+
+</body>
+</html>
