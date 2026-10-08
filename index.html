@@ -212,6 +212,94 @@
             background: #1a364e;
             transform: translateY(-1px);
         }
+        .btn-whatsapp-top {
+            background: #128C7E;
+            border: 1px solid #128C7E;
+            color: #FFFFFF;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(18, 140, 126, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-whatsapp-top:hover {
+            background: #075E54;
+            transform: translateY(-1px);
+        }
+        .paciente-banner-share {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1.5px solid #86EFAC;
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            box-shadow: 0 4px 15px rgba(22, 101, 52, 0.06);
+        }
+        @media (max-width: 768px) {
+            .paciente-banner-share {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+        }
+        .paciente-banner-share h4 {
+            color: #14532D;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .paciente-banner-share p {
+            color: #166534;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .btn-send-whatsapp-big {
+            background: #25D366;
+            color: #064E3B;
+            border: none;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            transition: all 0.2s;
+        }
+        .btn-send-whatsapp-big:hover {
+            background: #1EBE5D;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+        }
+        .dr-alert-loaded {
+            background: #FEF3C7;
+            border: 1.5px solid #F59E0B;
+            color: #92400E;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            margin-bottom: 18px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.3s ease;
+        }
 
         /* Tab Content Panes */
         .tab-pane {
@@ -760,13 +848,22 @@
             Etapa ativa: <strong id="currentTabLabel">Aba 1: Identificação e Visão de Futuro</strong>
         </div>
         <div class="action-btn-group">
+            <button class="btn-whatsapp-top" onclick="compartilharViaWhatsApp()">
+                📲 Enviar Ficha (WhatsApp)
+            </button>
             <button class="btn-view-all" id="btnToggleAll" onclick="toggleViewAll()">
-                📄 Ver Todas as Abas na Página
+                📄 Ver Todas as Abas
             </button>
             <button class="btn-print-top" onclick="prepareAndPrint()">
                 🖨️ Imprimir / Salvar PDF
             </button>
         </div>
+    </div>
+
+    <!-- Alerta quando a ficha foi aberta pela Dra. Tânia com dados carregados -->
+    <div class="dr-alert-loaded" id="drAlertLoaded">
+        <span>✅ <strong>Prontuário Carregado com Sucesso:</strong> As respostas fornecidas pelo paciente foram preenchidas automaticamente em todas as abas.</span>
+        <button onclick="document.getElementById('drAlertLoaded').style.display='none'" style="background:none;border:none;cursor:pointer;font-weight:700;color:#92400E;">✕</button>
     </div>
 
     <!-- ========================================== -->
@@ -1343,7 +1440,18 @@
                 <input type="text" id="indicador_progresso" placeholder="Ex: Acordar com mais disposição, redução de dores de cabeça, maior tolerância em conversas difíceis...">
             </div>
 
-            <div class="pane-nav-footer">
+            <!-- Banner Exclusivo de Conclusão do Paciente (Envio para Dra. Tânia) -->
+            <div class="paciente-banner-share">
+                <div>
+                    <h4>✨ Pré-Consulta Concluída com Sucesso!</h4>
+                    <p>Ao clicar no botão ao lado, você enviará com total segurança o link da sua ficha para o WhatsApp da Dra. Tânia para a sua consulta integrativa.</p>
+                </div>
+                <button class="btn-send-whatsapp-big" type="button" onclick="compartilharViaWhatsApp()">
+                    <span>📲 Enviar para Dra. Tânia</span>
+                </button>
+            </div>
+
+            <div class="pane-nav-footer" style="margin-top: 25px;">
                 <button class="btn-prev" onclick="switchTab(3)">← Voltar para Camada Psicossocial</button>
                 <button class="btn-next" onclick="switchTab(5)">Ir para Área Clínica Confidencial ➔</button>
             </div>
@@ -1610,6 +1718,172 @@
         }, 200);
     }
 
+    // ========================================================
+    // MOTOR DE COMPARTILHAMENTO E INTEGRAÇÃO DE PRONTUÁRIO
+    // ========================================================
+
+    // 1. Coleta todas as respostas preenchidas (Abas 1 a 4)
+    function coletarDadosPreenchidos() {
+        const payload = {
+            inputs: {},
+            chips: [],
+            radios: {},
+            pain: null,
+            meds: []
+        };
+
+        // Inputs e Textareas com ID
+        document.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(el => {
+            if (el.id && el.value && el.value.trim() !== '') {
+                payload.inputs[el.id] = el.value.trim();
+            }
+        });
+
+        // Medicamentos em tabela
+        const medRows = document.querySelectorAll('#medsTableBody tr');
+        medRows.forEach(tr => {
+            const rowInputs = tr.querySelectorAll('input');
+            const rowVals = Array.from(rowInputs).map(i => i.value.trim());
+            if (rowVals.some(v => v !== '')) {
+                payload.meds.push(rowVals);
+            }
+        });
+
+        // Chips selecionados (índice global ou texto)
+        document.querySelectorAll('.chip-option.selected').forEach(chip => {
+            const txt = chip.querySelector('.chip-text');
+            if (txt) {
+                payload.chips.push(txt.innerText.trim());
+            }
+        });
+
+        // Escala de Dor selecionada
+        const selPain = document.querySelector('.pain-face-card.selected');
+        if (selPain) {
+            const score = selPain.querySelector('.p-score');
+            if (score) payload.pain = score.innerText.trim();
+        }
+
+        // Radios (Estilos Relacionais)
+        document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+            payload.radios[r.name] = r.value;
+        });
+
+        return payload;
+    }
+
+    // 2. Transforma dados em link encurtado em Base64 seguro
+    function gerarLinkProntuario() {
+        const dados = coletarDadosPreenchidos();
+        const jsonStr = JSON.stringify(dados);
+        const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+        const baseUrl = window.location.origin + window.location.pathname;
+        return baseUrl + '?prontuario=' + encodeURIComponent(b64);
+    }
+
+    // 3. Compartilha via WhatsApp diretamente para a Dra. Tânia
+    function compartilharViaWhatsApp() {
+        const nomeInput = document.getElementById('campo_nome_completo');
+        const nome = nomeInput && nomeInput.value.trim() ? nomeInput.value.trim() : "Paciente";
+        const linkProntuario = gerarLinkProntuario();
+
+        const texto = `Olá Dra. Tânia! Aqui é ${nome}. Finalizei o preenchimento da minha Ficha de Avaliação Integrativa.\n\nPara visualizar meu prontuário preenchido na sua plataforma e dar seguimento à consulta, acesse o link:\n${linkProntuario}`;
+
+        // Número oficial da Dra. Tânia com DDI Brasil (+55)
+        const telefoneDraTania = "5511948977852";
+        const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefoneDraTania}&text=${encodeURIComponent(texto)}`;
+        window.open(urlWhatsApp, '_blank');
+    }
+
+    // 4. Se a Dra. Tânia abrir o link com "?prontuario=...", descompacta e preenche tudo na tela
+    function carregarDadosDaUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const b64 = urlParams.get('prontuario');
+        if (!b64) return;
+
+        try {
+            const jsonStr = decodeURIComponent(escape(atob(b64)));
+            const payload = JSON.parse(jsonStr);
+
+            // Restaura Inputs e Textareas
+            if (payload.inputs) {
+                for (const [id, val] of Object.entries(payload.inputs)) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.value = val;
+                        // Se for caixa expansível de "outro", abre o container
+                        const parentBox = el.closest('.outro-expandable-box');
+                        if (parentBox) parentBox.classList.add('open');
+                    }
+                }
+            }
+
+            // Restaura Chips selecionados
+            if (payload.chips && Array.isArray(payload.chips)) {
+                document.querySelectorAll('.chip-option').forEach(chip => {
+                    const txt = chip.querySelector('.chip-text');
+                    if (txt && payload.chips.includes(txt.innerText.trim())) {
+                        chip.classList.add('selected');
+                        // Abre caixa de outro se associada
+                        const onclickStr = chip.getAttribute('onclick') || '';
+                        const match = onclickStr.match(/'(box_[^']+)'/);
+                        if (match && match[1]) {
+                            const b = document.getElementById(match[1]);
+                            if (b) b.classList.add('open');
+                        }
+                    }
+                });
+            }
+
+            // Restaura Escala de Dor
+            if (payload.pain) {
+                document.querySelectorAll('.pain-face-card').forEach(c => {
+                    const sc = c.querySelector('.p-score');
+                    if (sc && sc.innerText.trim() === payload.pain) {
+                        c.classList.add('selected');
+                    }
+                });
+            }
+
+            // Restaura Radios Relacionais
+            if (payload.radios) {
+                for (const [name, val] of Object.entries(payload.radios)) {
+                    const radio = document.querySelector(`input[name="${name}"][value="${val}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+
+            // Restaura Tabela de Medicamentos
+            if (payload.meds && Array.isArray(payload.meds) && payload.meds.length > 0) {
+                const tbody = document.getElementById('medsTableBody');
+                tbody.innerHTML = '';
+                payload.meds.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><input type="text" value="${row[0] || ''}"></td>
+                        <td><input type="text" value="${row[1] || ''}"></td>
+                        <td><input type="text" value="${row[2] || ''}"></td>
+                        <td><input type="text" value="${row[3] || ''}"></td>
+                        <td><input type="text" value="${row[4] || ''}"></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Exibe o alerta elegante de prontuário carregado
+            const alertEl = document.getElementById('drAlertLoaded');
+            if (alertEl) alertEl.style.display = 'flex';
+
+        } catch (e) {
+            console.error("Não foi possível carregar o prontuário da URL:", e);
+        }
+    }
+
+    // Inicialização ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+        carregarDadosDaUrl();
+    });
+
     // Ouvintes nativos do navegador caso o usuário aperte Ctrl+P diretamente
     window.addEventListener('beforeprint', () => {
         if (!document.body.classList.contains('is-printing-report')) {
@@ -1619,8 +1893,9 @@
 
     // Garante que todo acesso ao link inicie com formulário e chips 100% limpos
     window.addEventListener('pageshow', function(event) {
-        // Se a página vier do cache (bfcache/voltar página), força reset visual dos chips
-        if (event.persisted) {
+        // Se a página vier do cache (bfcache/voltar página) e NÃO tiver prontuario na URL, reseta
+        const urlParams = new URLSearchParams(window.location.search);
+        if (event.persisted && !urlParams.get('prontuario')) {
             document.querySelectorAll('.chip-option').forEach(c => c.classList.remove('selected'));
             document.querySelectorAll('.pain-face-card').forEach(c => c.classList.remove('selected'));
             document.querySelectorAll('.outro-expandable-box').forEach(b => b.classList.remove('open'));
