@@ -1113,6 +1113,36 @@
                 </div>
             </div>
 
+            <!-- Hábitos e Desafios com Substâncias / Medicamentos -->
+            <div class="form-row" style="margin-top: 24px;">
+                <label class="question-label">Hábitos, Substâncias e Uso de Medicamentos Indutores:</label>
+                <div class="question-sub">Assinale se vivencia desafios ou se gostaria de apoio para reduzir ou cessar o uso:</div>
+                <div class="chips-grid">
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Desafios para parar de fumar (Tabagismo / Vaper / Cigarro eletrônico)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Desafios para reduzir ou cessar bebidas alcoólicas</span>
+                    </div>
+                    <div class="chip-option" id="chip_outras_substancias" onclick="toggleChipWithInput(this, 'box_outras_substancias', 'input_outras_substancias')">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Desafios para não usar outras substâncias ou medicamentos (Clonazepam, Zolpidem ou outras psicoativas)</span>
+                    </div>
+                    <div class="chip-option" onclick="toggleChip(this)">
+                        <div class="chip-checkbox"></div>
+                        <span class="chip-text">Não faço uso de tabaco, álcool em excesso ou medicamentos sem indicação</span>
+                    </div>
+                </div>
+
+                <!-- Caixa expansível para descrever quais substâncias ou medicamentos -->
+                <div class="outro-expandable-box" id="box_outras_substancias">
+                    <label>Descreva quais substâncias ou medicamentos você tem dificuldade em reduzir ou parar (e frequência de uso):</label>
+                    <input type="text" id="input_outras_substancias" placeholder="Ex: Clonazepam (Rivotril) para dormir todas as noites, Zolpidem, analgésicos frequentes, etc...">
+                </div>
+            </div>
+
             <div class="pane-nav-footer">
                 <button class="btn-prev" onclick="switchTab(1)">← Voltar para Identificação</button>
                 <button class="btn-next" onclick="switchTab(3)">Avançar para Camada Psicossocial ➔</button>
