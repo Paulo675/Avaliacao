@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Ficha Integrativa por Camadas | Clínica Dra. Tânia</title>
     <!-- Fontes Premium High-Ticket -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1611,6 +1614,16 @@
     window.addEventListener('beforeprint', () => {
         if (!document.body.classList.contains('is-printing-report')) {
             prepareAndPrint();
+        }
+    });
+
+    // Garante que todo acesso ao link inicie com formulário e chips 100% limpos
+    window.addEventListener('pageshow', function(event) {
+        // Se a página vier do cache (bfcache/voltar página), força reset visual dos chips
+        if (event.persisted) {
+            document.querySelectorAll('.chip-option').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.pain-face-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.outro-expandable-box').forEach(b => b.classList.remove('open'));
         }
     });
 </script>
