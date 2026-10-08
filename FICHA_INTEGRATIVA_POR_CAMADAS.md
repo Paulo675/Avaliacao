@@ -17,11 +17,8 @@ contexto: "Identificação humanizada, rotina e intenção terapêutica para 12 
 ator: "[P]"
 ```
 
-- **Como prefere ser chamado(a) (Nome social/afetivo):** `________________________`
-- **Nome completo civil (para prontuário/receituário):** `________________________`
-- **Data de nascimento:** `____/____/________`  |  **Idade:** `____ anos`  |  **Gênero/Identidade (se desejar compartilhar):** `________________________`
-- **Profissão / Ocupação atual:** `________________________________________`
-- **Como é a sua rotina diária hoje?** *(Ex: horários de trabalho, turnos, estudos, cuidados da casa/família)*
+- **Nome completo:** `____________________________________________________________________________________`
+- **Como é a sua rotina diária hoje?** *(Ex: horários habituais, turnos, estudos, cuidados da casa/família)*
   `____________________________________________________________________________________`
 - **Estado civil / Vida relacional:**
   - [ ] Solteiro(a)
@@ -290,9 +287,9 @@ ator: "[P]"
 
 ### 3.3. Como Você Percebe Suas Reações e Seu Estilo nas Relações
 > *Aqui você encontrará afirmações sobre jeitos comuns de sentir e se relacionar. Nenhuma frase é um rótulo ou diagnóstico; são apenas pistas sobre o seu modo único de funcionar no mundo.*  
-> **Escala:** `[ R = Raramente ]` • `[ A = Às vezes ]` • `[ F = Frequentemente ]` • `[ Conversar ]`
+> **Escala:** `[ R = Raramente ]` • `[ A = Às vezes ]` • `[ F = Frequentemente ]` • `[ QS = Quase sempre ]`
 
-| Afirmação em Linguagem Amigável | R | A | F | Conversar |
+| Afirmação em Linguagem Amigável | R | A | F | Quase sempre |
 | :--- | :---: | :---: | :---: | :---: |
 | **01.** Fico atento(a) ou desconfiado(a) sobre as reais segundas intenções das pessoas comigo. | [ ] | [ ] | [ ] | [ ] |
 | **02.** Sinto que funciono melhor sozinho(a) e costumo preferir manter distância e pouca intimidade. | [ ] | [ ] | [ ] | [ ] |

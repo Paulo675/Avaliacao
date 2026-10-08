@@ -309,6 +309,11 @@
             outline: none;
             transition: all 0.2s ease;
         }
+        input::placeholder, textarea::placeholder {
+            color: #9CA3AF;
+            font-style: italic;
+            opacity: 0.85;
+        }
         input:focus, select:focus, textarea:focus {
             border-color: var(--gold-matte);
             box-shadow: 0 0 0 3px rgba(180, 155, 103, 0.15);
@@ -363,9 +368,9 @@
             background: var(--bg-principal);
         }
         .chip-option.selected {
-            background: var(--navy-deep);
-            border-color: var(--navy-deep);
-            color: #FFFFFF;
+            background: var(--navy-deep) !important;
+            border-color: var(--navy-deep) !important;
+            color: #FFFFFF !important;
         }
         .chip-checkbox {
             width: 18px;
@@ -392,6 +397,9 @@
             font-size: 13px;
             font-weight: 500;
         }
+        .chip-option.selected .chip-text {
+            color: #FFFFFF !important;
+        }
 
         /* Pain scale */
         .pain-faces-row {
@@ -413,9 +421,9 @@
         }
         .pain-face-card:hover { border-color: var(--gold-matte); transform: translateY(-2px); }
         .pain-face-card.selected {
-            background: var(--navy-deep);
-            border-color: var(--navy-deep);
-            color: #FFFFFF;
+            background: var(--navy-deep) !important;
+            border-color: var(--navy-deep) !important;
+            color: #FFFFFF !important;
         }
         .pain-face-card.selected .p-desc { color: rgba(255,255,255,0.85); }
         .pain-face-card.selected .p-score { color: var(--gold-matte); }
@@ -483,7 +491,7 @@
             text-align: center;
             border-bottom: 2px solid var(--border-light);
         }
-        .relational-table th:first-child { text-align: left; width: 62%; }
+        .relational-table th:first-child { text-align: left; width: 56%; }
         .relational-table td {
             padding: 11px 14px;
             border-bottom: 1px solid var(--border-light);
@@ -498,13 +506,38 @@
             border-left: 4px solid var(--gold-matte);
             border-radius: 12px;
             padding: 16px 20px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .meta-card h5 {
             font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 18px;
             color: var(--navy-deep);
             margin-bottom: 4px;
+        }
+
+        /* Tab 5: Sub-cards para Conduta e Prescrição Discriminada */
+        .clinical-subcard {
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(15, 34, 51, 0.02);
+        }
+        .clinical-subcard-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin-bottom: 6px;
+        }
+        .clinical-subcard-title span.dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold-matte);
         }
 
         /* Pane navigation footers */
@@ -746,30 +779,16 @@
                 <span class="badge-pill">👤 Preenchimento do Paciente</span>
             </div>
 
+            <!-- Somente Nome Completo (sem como prefere ser chamado, sem profissao, sem data nasc) -->
             <div class="form-row grid-2">
                 <div>
-                    <label class="question-label">Como prefere ser chamado(a)?</label>
-                    <div class="question-sub">Seu nome de uso ou afetivo no cotidiano</div>
-                    <input type="text" id="campo_nome_preferido" placeholder="Ex: Tânia, Maria, Paulo...">
+                    <label class="question-label">Nome Completo</label>
+                    <div class="question-sub">Para registro oficial do prontuário e prescrições</div>
+                    <input type="text" id="campo_nome_completo" placeholder="Digite seu nome completo">
                 </div>
                 <div>
-                    <label class="question-label">Nome civil completo</label>
-                    <div class="question-sub">Para emissão segura de prescrições e prontuário</div>
-                    <input type="text" id="campo_nome_civil" placeholder="Nome oficial de registro">
-                </div>
-            </div>
-
-            <div class="form-row grid-3">
-                <div>
-                    <label class="question-label">Data de Nascimento</label>
-                    <input type="text" id="campo_data_nascimento" placeholder="DD / MM / AAAA">
-                </div>
-                <div>
-                    <label class="question-label">Profissão / Ocupação</label>
-                    <input type="text" id="campo_profissao" placeholder="Sua atividade principal">
-                </div>
-                <div>
-                    <label class="question-label">Estado Relacional</label>
+                    <label class="question-label">Situação Relacional</label>
+                    <div class="question-sub">Como se encontra no momento</div>
                     <select id="campo_estado_relacional">
                         <option value="">Selecione...</option>
                         <option value="Solteiro(a)">Solteiro(a)</option>
@@ -837,11 +856,11 @@
                 <span class="badge-pill">🌿 Corpo & Fisiologia</span>
             </div>
 
-            <!-- 1. Top 15 Sintomas + Outro com caixa expansível -->
+            <!-- 1. Top 15 Sintomas (TODOS DESMARCADOS INICIALMENTE) -->
             <div class="form-row">
                 <label class="question-label">O que você tem percebido recentemente? (Clique para selecionar suas prioridades):</label>
                 <div class="chips-grid" id="symptomsGrid">
-                    <div class="chip-option selected" onclick="toggleChip(this)">
+                    <div class="chip-option" onclick="toggleChip(this)">
                         <div class="chip-checkbox"></div>
                         <span class="chip-text">Preocupação constante ou mente que não desliga</span>
                     </div>
@@ -861,7 +880,7 @@
                         <div class="chip-checkbox"></div>
                         <span class="chip-text">Irritação fácil ou pavio curto no cotidiano</span>
                     </div>
-                    <div class="chip-option selected" onclick="toggleChip(this)">
+                    <div class="chip-option" onclick="toggleChip(this)">
                         <div class="chip-checkbox"></div>
                         <span class="chip-text">Mudanças no apetite (comer sem fome ou sem apetite)</span>
                     </div>
@@ -869,7 +888,7 @@
                         <div class="chip-checkbox"></div>
                         <span class="chip-text">Dificuldade para focar ou concluir tarefas</span>
                     </div>
-                    <div class="chip-option selected" onclick="toggleChip(this)">
+                    <div class="chip-option" onclick="toggleChip(this)">
                         <div class="chip-checkbox"></div>
                         <span class="chip-text">Dificuldade para dormir ou despertares de madrugada</span>
                     </div>
@@ -923,13 +942,13 @@
                 </div>
             </div>
 
-            <!-- 2. Diagnósticos prévios informados + Outro com caixa expansível -->
+            <!-- 2. Diagnósticos prévios informados (TODOS DESMARCADOS INICIALMENTE) -->
             <div class="form-row" style="margin-top: 24px;">
                 <label class="question-label">Algum médico ou especialista já mencionou algum diagnóstico com você anteriormente?</label>
                 <div class="question-sub">Marque apenas o que já lhe foi explicado em consultas prévias:</div>
                 <div class="chips-grid">
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Episódio de depressão ou tristeza profunda</span></div>
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Ansiedade generalizada ou constante</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Ansiedade generalizada ou constante</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Crises de pânico / sensação súbita de sufoco</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Receio intenso de lugares cheios, fechados ou sair</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Oscilações marcantes de fases de humor</span></div>
@@ -952,13 +971,13 @@
                 </div>
             </div>
 
-            <!-- 3. Comorbidades Físicas + Outra com caixa expansível -->
+            <!-- 3. Comorbidades Físicas (TODAS DESMARCADAS INICIALMENTE) -->
             <div class="form-row" style="margin-top: 24px;">
                 <label class="question-label">Condições de Saúde Física Conhecidas:</label>
                 <div class="chips-grid">
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Pressão alta (Hipertensão)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Pressão alta (Hipertensão)</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Diabetes ou Pré-diabetes</span></div>
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Alteração na tireoide (Hipotireoidismo)</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Alteração na tireoide (Hipotireoidismo)</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Colesterol ou Triglicerídeos altos</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sobrepeso ou Obesidade</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Gordura no fígado (Esteatose hepática)</span></div>
@@ -980,7 +999,7 @@
                 </div>
             </div>
 
-            <!-- Escala de Dor -->
+            <!-- Escala de Dor (DESMARCADA INICIALMENTE) -->
             <div class="form-row" style="margin-top: 24px;">
                 <label class="question-label">Experiência com a Dor Física (Se houver):</label>
                 <div class="question-sub">Selecione a expressão que mais se aproxima de como você sente a dor:</div>
@@ -996,7 +1015,7 @@
                         <div class="p-score">Nível 2-3</div>
                         <div class="p-desc">Incômodo leve, esquecido nas atividades.</div>
                     </div>
-                    <div class="pain-face-card selected" onclick="selectPainFace(this, 'Nível 4-5')">
+                    <div class="pain-face-card" onclick="selectPainFace(this, 'Nível 4-5')">
                         <div class="p-emoji">🙁</div>
                         <div class="p-score">Nível 4-5</div>
                         <div class="p-desc">Dor moderada, desgastante mas tolerável.</div>
@@ -1018,7 +1037,7 @@
                 </div>
             </div>
 
-            <!-- Medicamentos em linha -->
+            <!-- Medicamentos em linha (COM PLACEHOLDERS EM COR CLARA, SEM TEXTO FIXO PRÉVIO) -->
             <div class="form-row" style="margin-top: 24px;">
                 <label class="question-label">Medicamentos e Suplementos em Uso Atual:</label>
                 <div class="question-sub">Formato estruturado em linha para mapeamento de interações e segurança farmacológica:</div>
@@ -1035,18 +1054,18 @@
                     </thead>
                     <tbody id="medsTableBody">
                         <tr>
-                            <td><input type="text" value="Sertralina"></td>
-                            <td><input type="text" value="50 mg"></td>
-                            <td><input type="text" value="1x pela manhã"></td>
-                            <td><input type="text" value="Ansiedade / Humor"></td>
-                            <td><input type="text" value="Náusea leve inicial"></td>
+                            <td><input type="text" placeholder="Ex: Sertralina"></td>
+                            <td><input type="text" placeholder="Ex: 50 mg"></td>
+                            <td><input type="text" placeholder="Ex: 1x pela manhã"></td>
+                            <td><input type="text" placeholder="Ex: Ansiedade / Humor"></td>
+                            <td><input type="text" placeholder="Ex: Náusea leve ou Nenhum"></td>
                         </tr>
                         <tr>
-                            <td><input type="text" value="Levotiroxina"></td>
-                            <td><input type="text" value="50 mcg"></td>
-                            <td><input type="text" value="1x em jejum"></td>
-                            <td><input type="text" value="Hipotireoidismo"></td>
-                            <td><input type="text" value="Nenhum"></td>
+                            <td><input type="text" placeholder="Ex: Levotiroxina"></td>
+                            <td><input type="text" placeholder="Ex: 50 mcg"></td>
+                            <td><input type="text" placeholder="Ex: 1x em jejum"></td>
+                            <td><input type="text" placeholder="Ex: Hipotireoidismo"></td>
+                            <td><input type="text" placeholder="Ex: Nenhum"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1062,8 +1081,9 @@
                     <div>
                         <label style="font-size: 12.5px; font-weight: 600;">Sono</label>
                         <select>
+                            <option value="">Selecione...</option>
                             <option>Dorme bem (7-8h reparadoras)</option>
-                            <option selected>Demora para pegar no sono</option>
+                            <option>Demora para pegar no sono</option>
                             <option>Acorda no meio da noite</option>
                             <option>Sono agitado / não reparador</option>
                             <option>Ronco frequente / suspeita apneia</option>
@@ -1072,9 +1092,10 @@
                     <div>
                         <label style="font-size: 12.5px; font-weight: 600;">Alimentação</label>
                         <select>
+                            <option value="">Selecione...</option>
                             <option>Horários regulares e equilibrada</option>
                             <option>Pulo refeições com frequência</option>
-                            <option selected>Como sob estresse emocional</option>
+                            <option>Como sob estresse emocional</option>
                             <option>Muitos ultraprocessados / delivery</option>
                             <option>Sinto culpa após comer</option>
                         </select>
@@ -1082,7 +1103,8 @@
                     <div>
                         <label style="font-size: 12.5px; font-weight: 600;">Atividade Física</label>
                         <select>
-                            <option selected>Sedentário(a) no momento</option>
+                            <option value="">Selecione...</option>
+                            <option>Sedentário(a) no momento</option>
                             <option>Caminhadas leves</option>
                             <option>Pratica 1 a 2x por semana</option>
                             <option>Regular (3x ou mais por semana)</option>
@@ -1111,15 +1133,15 @@
                 <span class="badge-pill">🌱 Vínculos & Recursos</span>
             </div>
 
-            <!-- 4. O que mais tem pesado nos seus ombros hoje + Outros com caixa expansível -->
+            <!-- O que mais tem pesado (DESMARCADAS INICIALMENTE) -->
             <div class="form-row">
                 <label class="question-label">O que mais tem pesado nos seus ombros hoje?</label>
                 <div class="question-sub">Marque as principais fontes de sobrecarga no seu momento:</div>
                 <div class="chips-grid">
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sobrecarga ou pressão no trabalho</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sobrecarga ou pressão no trabalho</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Conflitos ou distanciamento na família</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Desafios no relacionamento amoroso</span></div>
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Preocupações financeiras</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Preocupações financeiras</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Cuidado exaustivo com dependentes</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Sensação de solidão / falta de apoio</span></div>
                     <!-- OUTROS PESOS / DESAFIOS -->
@@ -1147,7 +1169,7 @@
                 </div>
             </div>
 
-            <!-- Estilos Relacionais Humanizados -->
+            <!-- Estilos Relacionais: "Quase sempre" na 4ª coluna (em vez de "Conversar") -->
             <div class="form-row" style="margin-top: 24px;">
                 <label class="question-label">Como você se percebe nas suas relações (Sem rótulos diagnósticos):</label>
                 <p class="question-sub">
@@ -1161,79 +1183,79 @@
                             <th>Raramente</th>
                             <th>Às vezes</th>
                             <th>Frequentemente</th>
-                            <th>Conversar</th>
+                            <th>Quase sempre</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>01. Fico muito em alerta ou desconfiado(a) sobre as reais intenções das pessoas comigo.</td>
                             <td align="center"><input type="radio" name="rel1" value="Raramente"></td>
-                            <td align="center"><input type="radio" name="rel1" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel1" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel1" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel1" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel1" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>02. Sinto-me mais sereno(a) em recolhimento e costumo preferir certa distância íntima.</td>
-                            <td align="center"><input type="radio" name="rel2" value="Raramente" checked></td>
+                            <td align="center"><input type="radio" name="rel2" value="Raramente"></td>
                             <td align="center"><input type="radio" name="rel2" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel2" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel2" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel2" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>03. Costumo sentir que meu jeito de pensar ou de sentir a vida é muito particular e incompreendido.</td>
                             <td align="center"><input type="radio" name="rel3" value="Raramente"></td>
-                            <td align="center"><input type="radio" name="rel3" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel3" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel3" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel3" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel3" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>04. Quando me sinto sob forte pressão, acabo agindo por impulso e depois lido com os impactos.</td>
                             <td align="center"><input type="radio" name="rel4" value="Raramente"></td>
                             <td align="center"><input type="radio" name="rel4" value="Às vezes"></td>
-                            <td align="center"><input type="radio" name="rel4" value="Frequentemente" checked></td>
-                            <td align="center"><input type="radio" name="rel4" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel4" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel4" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>05. Em vínculos estreitos, sinto emoções muito intensas e um medo profundo de afastamento.</td>
                             <td align="center"><input type="radio" name="rel5" value="Raramente"></td>
                             <td align="center"><input type="radio" name="rel5" value="Às vezes"></td>
-                            <td align="center"><input type="radio" name="rel5" value="Frequentemente" checked></td>
-                            <td align="center"><input type="radio" name="rel5" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel5" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel5" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>06. Sentir-me visto(a), expressivo(a) e ter reconhecimento tem um peso muito grande para mim.</td>
                             <td align="center"><input type="radio" name="rel6" value="Raramente"></td>
-                            <td align="center"><input type="radio" name="rel6" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel6" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel6" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel6" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel6" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>07. Críticas ou falta de reconhecimento do meu esforço mexem profundamente comigo.</td>
                             <td align="center"><input type="radio" name="rel7" value="Raramente"></td>
                             <td align="center"><input type="radio" name="rel7" value="Às vezes"></td>
-                            <td align="center"><input type="radio" name="rel7" value="Frequentemente" checked></td>
-                            <td align="center"><input type="radio" name="rel7" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel7" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel7" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>08. Posso recuar em aproximações quando temo ser julgado(a) ou passar por algum constrangimento.</td>
                             <td align="center"><input type="radio" name="rel8" value="Raramente"></td>
-                            <td align="center"><input type="radio" name="rel8" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel8" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel8" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel8" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel8" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>09. Tenho inclinação a buscar apoio ou aprovação de alguém próximo para tomar decisões importantes.</td>
                             <td align="center"><input type="radio" name="rel9" value="Raramente"></td>
-                            <td align="center"><input type="radio" name="rel9" value="Às vezes" checked></td>
+                            <td align="center"><input type="radio" name="rel9" value="Às vezes"></td>
                             <td align="center"><input type="radio" name="rel9" value="Frequentemente"></td>
-                            <td align="center"><input type="radio" name="rel9" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel9" value="Quase sempre"></td>
                         </tr>
                         <tr>
                             <td>10. Sustento um padrão de exigência muito alto comigo mesmo(a) e me incomodo com falhas e desordem.</td>
                             <td align="center"><input type="radio" name="rel10" value="Raramente"></td>
                             <td align="center"><input type="radio" name="rel10" value="Às vezes"></td>
-                            <td align="center"><input type="radio" name="rel10" value="Frequentemente" checked></td>
-                            <td align="center"><input type="radio" name="rel10" value="Conversar"></td>
+                            <td align="center"><input type="radio" name="rel10" value="Frequentemente"></td>
+                            <td align="center"><input type="radio" name="rel10" value="Quase sempre"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1263,33 +1285,29 @@
                 Esta síntese integra seus relatos com a formulação clínica acordada na consulta, estabelecendo compromissos claros e possíveis para os próximos 90 dias:
             </p>
 
+            <!-- Metas com placeholders em cinza claro que somem ao digitar (sem value fixo) -->
             <div class="meta-card">
                 <h5>1. Meta Fisiológica & Ritmo do Corpo (Biológica)</h5>
                 <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Qualidade do sono reparador, alívio de queixas digestivas e estabilização de energia.</p>
-                <input type="text" value="Ajustar higiene do sono e suplementação noturna de magnésio; caminhada matinal de 20 min 3x/semana.">
+                <input type="text" id="meta_corpo" placeholder="Ex: Ajustar higiene do sono e suplementação noturna de magnésio; caminhada matinal de 20 min 3x/semana.">
             </div>
 
             <div class="meta-card">
                 <h5>2. Meta Emocional & Relacional (Psicossocial)</h5>
                 <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Regulação da ansiedade em momentos de pressão e construção de limites saudáveis.</p>
-                <input type="text" value="Implementar pausas de respiração consciente de 5 min antes de reuniões; estabelecer horário limite de trabalho.">
+                <input type="text" id="meta_emocional" placeholder="Ex: Implementar pausas de respiração consciente de 5 min antes de reuniões; estabelecer horário limite de trabalho.">
             </div>
 
             <div class="meta-card">
                 <h5>3. Meta de Autocuidado & Revitalização (Sustentabilidade)</h5>
                 <p style="font-size: 13px; margin-bottom: 6px; color: #4B5563;">Foco: Resgatar momentos de prazer genuíno e redução da autocrítica excessiva.</p>
-                <input type="text" value="Reservar 1 período no final de semana exclusivamente para lazer e descanso sem compromisso de tela.">
+                <input type="text" id="meta_autocuidado" placeholder="Ex: Reservar 1 período no final de semana exclusivamente para lazer e descanso sem compromisso de tela.">
             </div>
 
-            <div class="form-row grid-2" style="margin-top: 20px;">
-                <div>
-                    <label class="question-label">Indicador de Progresso Percebido</label>
-                    <input type="text" placeholder="Como você e a médica saberão que houve evolução?">
-                </div>
-                <div>
-                    <label class="question-label">Data Prevista para Reavaliação</label>
-                    <input type="text" value="Em 6 a 8 semanas (Retorno de Consolidação)">
-                </div>
+            <div class="form-row" style="margin-top: 20px;">
+                <label class="question-label">Indicador de Progresso Percebido</label>
+                <div class="question-sub">Como você e a médica saberão que houve evolução nas próximas semanas?</div>
+                <input type="text" id="indicador_progresso" placeholder="Ex: Acordar com mais disposição, redução de dores de cabeça, maior tolerância em conversas difíceis...">
             </div>
 
             <div class="pane-nav-footer">
@@ -1313,24 +1331,25 @@
             </div>
 
             <div style="background: #FDF9F0; border-left: 4px solid var(--gold-matte); padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 13px; color: #78350F;">
-                <strong>Segurança & Sigilo Clínico:</strong> Este espaço reúne hipóteses diagnósticas (CID-11), mapeamento de clusters de personalidade e os 18 Esquemas Desadaptativos de Young. Estas notas são de uso exclusivo da profissional e não aparecem na devolutiva leiga do paciente sem validação direta.
+                <strong>Segurança & Sigilo Clínico:</strong> Este espaço reúne hipóteses diagnósticas (CID-11), exame físico e os 18 Esquemas Desadaptativos de Young. Estas notas são de uso exclusivo da profissional e são discriminadas no relatório final confidencial.
             </div>
 
             <div class="form-row grid-2">
                 <div>
                     <label class="question-label">Sinais Vitais e Exame Físico</label>
-                    <input type="text" placeholder="PA: 120/80 mmHg | FC: 72 bpm | IMC: 24.2 | Circ. Abd: 82 cm">
+                    <input type="text" placeholder="Ex: PA: 120/80 mmHg | FC: 72 bpm | IMC: 24.2 | Circ. Abd: 82 cm">
                 </div>
                 <div>
                     <label class="question-label">Hipóteses Diagnósticas Principais (CID-11 / DSM)</label>
-                    <input type="text" placeholder="Transtorno de Ansiedade Generalizada (6B00), Dispepsia funcional...">
+                    <input type="text" placeholder="Ex: Transtorno de Ansiedade Generalizada (6B00), Dispepsia funcional...">
                 </div>
             </div>
 
+            <!-- 18 Esquemas (TODOS DESMARCADOS INICIALMENTE) -->
             <div class="form-row">
                 <label class="question-label">Mapeamento dos 18 Esquemas Desadaptativos Iniciais (Young):</label>
                 <div class="chips-grid" style="grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));">
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Abandono / Instabilidade</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Abandono / Instabilidade</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Privação Emocional</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Desconfiança / Abuso</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Isolamento Social</span></div>
@@ -1340,20 +1359,62 @@
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Vulnerabilidade ao Dano</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Emaranhamento</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Subjugação</span></div>
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Autossacrifício</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Autossacrifício</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Busca de Aprovação</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Negativismo / Pessimismo</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Inibição Emocional</span></div>
-                    <div class="chip-option selected" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Padrões Inflexíveis</span></div>
+                    <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Padrões Inflexíveis</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Grandiosidade / Arrogo</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Autocontrole Insuficiente</span></div>
                     <div class="chip-option" onclick="toggleChip(this)"><div class="chip-checkbox"></div><span class="chip-text">Postura Punitiva</span></div>
                 </div>
             </div>
 
-            <div class="form-row">
-                <label class="question-label">Conduta Médica, Estratégia de Prescrição / Desprescrição e Exames:</label>
-                <textarea rows="3" placeholder="Ajustes farmacológicos, exames laboratoriais complementares solicitados, desprescrição planejada e encaminhamentos interdisciplinares..."></textarea>
+            <!-- DEFINIÇÕES CLÍNICAS SEPARADAS EM BLOCOS DISCRIMINADOS -->
+            <div style="margin-top: 26px;">
+                <label class="question-label" style="font-size: 15px; margin-bottom: 12px; color: var(--navy-deep);">
+                    Definições Clínicas e Conduta Discriminada (Cada área em separado):
+                </label>
+
+                <!-- Bloco 1: Conduta Médica Integrativa -->
+                <div class="clinical-subcard">
+                    <div class="clinical-subcard-title">
+                        <span class="dot"></span>
+                        <span>1. Conduta Médica Integrativa & Estratégia Geral</span>
+                    </div>
+                    <div class="question-sub">Abordagem de estilo de vida, orientações psicossociais e plano global:</div>
+                    <textarea rows="3" id="campo_conduta_geral" placeholder="Ex: Orientações de crononutrição e ritmo circadiano, psicoterapia com foco em esquemas, higiene do sono..."></textarea>
+                </div>
+
+                <!-- Bloco 2: Prescrição Farmacológica e Fitoterápica -->
+                <div class="clinical-subcard">
+                    <div class="clinical-subcard-title">
+                        <span class="dot"></span>
+                        <span>2. Prescrição Farmacológica e Fitoterápica</span>
+                    </div>
+                    <div class="question-sub">Medicamentos alopáticos, suplementação ortomolecular e fitoterapia indicados:</div>
+                    <textarea rows="3" id="campo_prescricao" placeholder="Ex: Magnésio Inositol 300mg à noite, Ashwagandha 300mg pela manhã, ajuste posológico..."></textarea>
+                </div>
+
+                <!-- Bloco 3: Desprescrição Planejada -->
+                <div class="clinical-subcard">
+                    <div class="clinical-subcard-title">
+                        <span class="dot"></span>
+                        <span>3. Desprescrição Planejada / Redução de Polifarmácia</span>
+                    </div>
+                    <div class="question-sub">Medicamentos a serem reduzidos, descontinuados gradualmente ou substituídos:</div>
+                    <textarea rows="3" id="campo_desprescricao" placeholder="Ex: Desmame gradual de hipnótico z-drug ao longo de 4 semanas, monitoramento de sintomas de retirada..."></textarea>
+                </div>
+
+                <!-- Bloco 4: Exames Laboratoriais Solicitados -->
+                <div class="clinical-subcard">
+                    <div class="clinical-subcard-title">
+                        <span class="dot"></span>
+                        <span>4. Exames Laboratoriais e Complementares Solicitados</span>
+                    </div>
+                    <div class="question-sub">Painéis de sangue, imagem, perfil inflamatório/metabólico requeridos:</div>
+                    <textarea rows="3" id="campo_exames_solicitados" placeholder="Ex: Hemograma completo, Ferritina, TSH, T4L, Vitamina D3, Perfil lipídico, Curva glicêmica e insulina..."></textarea>
+                </div>
             </div>
 
             <div class="pane-nav-footer">
@@ -1421,7 +1482,7 @@
         chip.classList.toggle('selected');
     }
 
-    // Função especial para chips com caixa de texto expansível
+    // Função para chips com caixa de texto expansível
     function toggleChipWithInput(chip, boxId, inputId) {
         chip.classList.toggle('selected');
         const box = document.getElementById(boxId);
@@ -1445,11 +1506,11 @@
         const tbody = document.getElementById('medsTableBody');
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td><input type="text" placeholder="Medicamento"></td>
-            <td><input type="text" placeholder="Dose"></td>
-            <td><input type="text" placeholder="Horários"></td>
-            <td><input type="text" placeholder="Motivo"></td>
-            <td><input type="text" placeholder="Efeito adverso?"></td>
+            <td><input type="text" placeholder="Ex: Medicamento"></td>
+            <td><input type="text" placeholder="Ex: Dose"></td>
+            <td><input type="text" placeholder="Ex: Horários"></td>
+            <td><input type="text" placeholder="Ex: Motivo"></td>
+            <td><input type="text" placeholder="Ex: Efeito adverso?"></td>
         `;
         tbody.appendChild(tr);
     }
@@ -1463,7 +1524,6 @@
 
         // 1. Sincroniza todos os INPUTS (text, number)
         document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
-            // Se for uma caixinha de "Outro" cujo container não está aberto, pula para não poluir
             const parentBox = input.closest('.outro-expandable-box');
             if (parentBox && !parentBox.classList.contains('open')) {
                 return;
